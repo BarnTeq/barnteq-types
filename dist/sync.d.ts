@@ -1,7 +1,6 @@
 /**
  * Sync Types - Edge device synchronization
  */
-import type { Command } from './command';
 import type { SyncHealthMetrics, SyncBufferStatus } from './barn';
 /**
  * Event types from edge device
@@ -9,9 +8,11 @@ import type { SyncHealthMetrics, SyncBufferStatus } from './barn';
 export type EventLogType = 'detection' | 'health_alert' | 'sensor_reading' | 'camera_detection' | 'system_event' | 'camera_offline' | 'camera_online';
 /**
  * Event log from edge device
+ * Note: Supports both `type` (legacy) and `eventType` (preferred)
  */
 export interface EventLog {
-    eventType: EventLogType;
+    eventType?: EventLogType;
+    type?: EventLogType;
     sequenceNumber: number;
     timestamp: string;
     horseId?: string;
@@ -30,12 +31,18 @@ export interface SyncRequest {
 }
 /**
  * Sync response to edge device
+ * Uses SyncResponseLegacy format for pendingCommands
  */
 export interface SyncResponse {
     success: boolean;
     timestamp: string;
     eventsProcessed: number;
-    pendingCommands: Command[];
+    pendingCommands: Array<{
+        id: string;
+        action: string;
+        payload: Record<string, unknown>;
+        idempotency_key?: string;
+    }>;
 }
 /**
  * Extended sync response with commands (legacy format)

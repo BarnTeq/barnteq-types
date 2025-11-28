@@ -2,7 +2,6 @@
  * Sync Types - Edge device synchronization
  */
 
-import type { Command } from './command';
 import type { SyncHealthMetrics, SyncBufferStatus } from './barn';
 
 /**
@@ -19,9 +18,11 @@ export type EventLogType =
 
 /**
  * Event log from edge device
+ * Note: Supports both `type` (legacy) and `eventType` (preferred)
  */
 export interface EventLog {
-  eventType: EventLogType;
+  eventType?: EventLogType;
+  type?: EventLogType; // Legacy field, prefer eventType
   sequenceNumber: number;
   timestamp: string; // ISO 8601
   horseId?: string;
@@ -42,12 +43,18 @@ export interface SyncRequest {
 
 /**
  * Sync response to edge device
+ * Uses SyncResponseLegacy format for pendingCommands
  */
 export interface SyncResponse {
   success: boolean;
   timestamp: string;
   eventsProcessed: number;
-  pendingCommands: Command[];
+  pendingCommands: Array<{
+    id: string;
+    action: string;
+    payload: Record<string, unknown>;
+    idempotency_key?: string;
+  }>;
 }
 
 /**

@@ -110,6 +110,11 @@ export interface UpdateHorseRequest {
 
   assignedStallId?: string | null;
 
+  // Legacy fields (deprecated)
+  stallAssignment?: string | null;
+  cameraAssignments?: string[] | null;
+  sensorAssignments?: string[] | null;
+
   settings?: Record<string, unknown> | null;
 }
 

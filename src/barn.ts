@@ -313,7 +313,7 @@ export interface BarnConfigFloorplan {
  */
 export interface BarnConfig {
   barn: {
-    id: string;
+    id?: string;
     name: string;
     timezone: string;
     address?: string;
@@ -322,7 +322,7 @@ export interface BarnConfig {
   horses: BarnConfigHorse[];
   cameras: BarnConfigCamera[];
   floorplan?: BarnConfigFloorplan;
-  syncIntervalSeconds: number;
+  syncIntervalSeconds?: number;
 }
 
 /**

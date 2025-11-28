@@ -82,6 +82,9 @@ export interface UpdateHorseRequest {
     farrierContact?: string | null;
     feedingInstructions?: string | null;
     assignedStallId?: string | null;
+    stallAssignment?: string | null;
+    cameraAssignments?: string[] | null;
+    sensorAssignments?: string[] | null;
     settings?: Record<string, unknown> | null;
 }
 /**
