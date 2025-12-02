@@ -11,7 +11,7 @@ import type { DeviceType } from './device';
 /**
  * Home Assistant device_class values that BarnTeq tracks
  */
-export type HAEntityClass = 'door' | 'temperature' | 'humidity' | 'battery' | 'smoke' | 'carbon_monoxide' | 'motion' | 'occupancy';
+export type HAEntityClass = 'door' | 'temperature' | 'humidity' | 'battery' | 'smoke' | 'carbon_monoxide' | 'motion' | 'occupancy' | 'level';
 /**
  * Device bindings - device type determines which fields are used.
  * All fields are optional; presence depends on device type.

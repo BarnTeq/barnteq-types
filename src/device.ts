@@ -9,6 +9,7 @@ export type DeviceType =
   | 'camera'
   | 'gate_sensor'
   | 'water_sensor'
+  | 'feed_sensor'
   | 'gps_tracker'
   | 'climate_sensor'
   | 'motion_sensor';
@@ -108,7 +109,7 @@ export interface CriticalEvent {
 export const EDGE_SENSOR_TO_DEVICE_TYPE: Record<string, DeviceType> = {
   gates: 'gate_sensor',
   water: 'water_sensor',
-  feed: 'water_sensor',
+  feed: 'feed_sensor',
   temperature: 'climate_sensor',
   smoke: 'climate_sensor',
   co: 'climate_sensor',

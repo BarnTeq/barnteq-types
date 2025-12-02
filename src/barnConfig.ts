@@ -25,7 +25,8 @@ export type HAEntityClass =
   | 'smoke'
   | 'carbon_monoxide'
   | 'motion'
-  | 'occupancy';
+  | 'occupancy'
+  | 'level';
 
 // ============================================================================
 // DEVICE BINDINGS
@@ -211,7 +212,8 @@ export function isStallLocation(location: string): boolean {
 export const DEVICE_ENTITY_CLASSES: Record<DeviceType, HAEntityClass[]> = {
   camera: ['occupancy', 'motion'],
   gate_sensor: ['door', 'battery'],
-  water_sensor: ['humidity', 'battery'],
+  water_sensor: ['level', 'battery'],
+  feed_sensor: ['level', 'battery'],
   climate_sensor: ['temperature', 'humidity', 'battery'],
   motion_sensor: ['motion', 'battery'],
   gps_tracker: [],

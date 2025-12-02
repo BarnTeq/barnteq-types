@@ -4,7 +4,7 @@
 /**
  * Device types supported by the system
  */
-export type DeviceType = 'camera' | 'gate_sensor' | 'water_sensor' | 'gps_tracker' | 'climate_sensor' | 'motion_sensor';
+export type DeviceType = 'camera' | 'gate_sensor' | 'water_sensor' | 'feed_sensor' | 'gps_tracker' | 'climate_sensor' | 'motion_sensor';
 /**
  * Device connection status
  */

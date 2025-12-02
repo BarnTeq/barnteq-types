@@ -10,7 +10,7 @@ exports.EDGE_SENSOR_TO_DEVICE_TYPE = void 0;
 exports.EDGE_SENSOR_TO_DEVICE_TYPE = {
     gates: 'gate_sensor',
     water: 'water_sensor',
-    feed: 'water_sensor',
+    feed: 'feed_sensor',
     temperature: 'climate_sensor',
     smoke: 'climate_sensor',
     co: 'climate_sensor',

@@ -43,7 +43,8 @@ function isStallLocation(location) {
 exports.DEVICE_ENTITY_CLASSES = {
     camera: ['occupancy', 'motion'],
     gate_sensor: ['door', 'battery'],
-    water_sensor: ['humidity', 'battery'],
+    water_sensor: ['level', 'battery'],
+    feed_sensor: ['level', 'battery'],
     climate_sensor: ['temperature', 'humidity', 'battery'],
     motion_sensor: ['motion', 'battery'],
     gps_tracker: [],
