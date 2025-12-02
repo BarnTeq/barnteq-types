@@ -10,9 +10,6 @@ export {
   API_ERROR_CODES,
   type ApiError,
   type ApiErrorCode,
-  type PaginatedResponse,
-  type PaginationParams,
-  type AsyncJobResponse,
 } from './api';
 
 // Barn Types
@@ -104,7 +101,6 @@ export {
   type SyncRequest,
   type SyncResponse,
   type SyncResponseExtended,
-  type SyncResponseLegacy,
   type SyncStatus,
   type SyncStatusResponse,
 } from './sync';
@@ -131,7 +127,4 @@ export {
   // Age/BirthDate conversions
   birthDateToAge,
   ageToBirthDate,
-  // Device reading transforms
-  transformReadingToCloud,
-  transformReadingToEdge,
 } from './transforms';
