@@ -32,17 +32,6 @@ export {
   type SyncBufferStatus,
   type SyncHealthMetrics,
   type WebSocketStatus,
-  // Edge config types
-  type EdgeBarn,
-  type EdgeBarnConfig,
-  type EdgeBarnSensors,
-  type EdgeCamera,
-  type EdgeConfigHorse,
-  type EdgeFloorplan,
-  type EdgeFloorplanPosition,
-  type EdgeSensor,
-  type EdgeStall,
-  type EdgeStallSensors,
 } from './barn';
 
 // Edge Config Types (flat devices array structure)
