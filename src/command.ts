@@ -4,14 +4,15 @@
 
 /**
  * Command actions supported by edge devices
+ *
+ * Note: Only force_sync and adjust_sync_interval are implemented.
+ * Removed commands:
+ * - start_webrtc_polling: Superseded by Pusher push model
+ * - update_config: Edge owns barn config, cloud should not push it
+ * - clear_cache: Low value, force_sync covers main use case
+ * - emergency_stop: SSH/physical reset is sufficient
  */
-export type CommandAction =
-  | 'force_sync'
-  | 'adjust_sync_interval'
-  | 'start_webrtc_polling'
-  | 'update_config'
-  | 'clear_cache'
-  | 'emergency_stop';
+export type CommandAction = 'force_sync' | 'adjust_sync_interval';
 
 /**
  * Command status
@@ -65,25 +66,6 @@ export interface CommandPayloads {
   adjust_sync_interval: {
     intervalMinutes: number;
     durationMinutes?: number;
-  };
-
-  start_webrtc_polling: {
-    durationSeconds: number;
-    reason: string;
-  };
-
-  update_config: {
-    setting: string;
-    value: unknown;
-  };
-
-  clear_cache: {
-    cacheType: 'horses' | 'media' | 'all';
-  };
-
-  emergency_stop: {
-    reason: string;
-    components?: string[];
   };
 }
 

@@ -86,6 +86,7 @@ export interface Barn {
 }
 /**
  * Barn creation request
+ * Note: stallCount is NOT set here - stalls are configured on edge device during setup
  */
 export interface CreateBarnRequest {
     name: string;
@@ -96,7 +97,6 @@ export interface CreateBarnRequest {
     };
     timezone?: string;
     packageType: PackageType;
-    stallCount: number;
 }
 /**
  * Barn update request
@@ -109,6 +109,7 @@ export interface UpdateBarnRequest {
         lng: number;
     };
     timezone?: string;
+    logoUrl?: string | null;
     settings?: Record<string, unknown>;
 }
 /**
@@ -293,4 +294,9 @@ export interface ConfigSyncResult {
     stallsUpdated: number;
     devicesCreated: number;
     devicesUpdated: number;
+    /**
+     * Mapping from edge stall ID (e.g., "stall_1") to cloud stall UUID
+     * Used by edge to translate local stall identifiers to cloud UUIDs
+     */
+    stallMappings: Record<string, string>;
 }

@@ -23,7 +23,6 @@ export {
   type BarnConfigFloorplan,
   type BarnConfigStall,
   type BufferStatus,
-  type ConfigSyncResult,
   type CreateBarnRequest,
   type UpdateBarnRequest,
   type AdoptBarnRequest,
@@ -45,6 +44,24 @@ export {
   type EdgeStall,
   type EdgeStallSensors,
 } from './barn';
+
+// Edge Config Types (flat devices array structure)
+export {
+  type HAEntityClass,
+  type DeviceBindings,
+  type FloorplanPosition,
+  type FloorplanConfig,
+  type ConfigDevice,
+  type StallBindings,
+  type ConfigStall,
+  type BarnBindings,
+  type ConfigBarn,
+  type EdgeConfig,
+  type ConfigSyncResult,
+  isEdgeConfig,
+  isStallLocation,
+  DEVICE_ENTITY_CLASSES,
+} from './barnConfig';
 
 // Command Types
 export {
@@ -75,6 +92,7 @@ export {
 // Horse Types
 export {
   type Horse,
+  type HorseWithDevices,
   type HorseSex,
   type EdgeHorse,
   type BarnConfigHorse,
@@ -82,6 +100,8 @@ export {
   type UpdateHorseRequest,
   type AssignHorseToBarnRequest,
   type HorsesSyncResponse,
+  type StallDevice,
+  type DeviceLatestReading,
 } from './horse';
 
 // Sync Types

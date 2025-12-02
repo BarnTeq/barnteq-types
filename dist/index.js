@@ -6,10 +6,15 @@
  * between barnteq-edge and barnteq-cloud codebases.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformReadingToEdge = exports.transformReadingToCloud = exports.ageToBirthDate = exports.birthDateToAge = exports.camelToSnake = exports.snakeToCamel = exports.camelToSnakeString = exports.snakeToCamelString = exports.secondsToHours = exports.hoursToSeconds = exports.secondsToMinutes = exports.minutesToSeconds = exports.isoToUnixMs = exports.unixMsToIso = exports.isoToDate = exports.dateToIso = exports.isoToUnix = exports.unixToIso = exports.EDGE_SENSOR_TO_DEVICE_TYPE = exports.API_ERROR_CODES = void 0;
+exports.transformReadingToEdge = exports.transformReadingToCloud = exports.ageToBirthDate = exports.birthDateToAge = exports.camelToSnake = exports.snakeToCamel = exports.camelToSnakeString = exports.snakeToCamelString = exports.secondsToHours = exports.hoursToSeconds = exports.secondsToMinutes = exports.minutesToSeconds = exports.isoToUnixMs = exports.unixMsToIso = exports.isoToDate = exports.dateToIso = exports.isoToUnix = exports.unixToIso = exports.EDGE_SENSOR_TO_DEVICE_TYPE = exports.DEVICE_ENTITY_CLASSES = exports.isStallLocation = exports.isEdgeConfig = exports.API_ERROR_CODES = void 0;
 // API Types
 var api_1 = require("./api");
 Object.defineProperty(exports, "API_ERROR_CODES", { enumerable: true, get: function () { return api_1.API_ERROR_CODES; } });
+// Edge Config Types (flat devices array structure)
+var barnConfig_1 = require("./barnConfig");
+Object.defineProperty(exports, "isEdgeConfig", { enumerable: true, get: function () { return barnConfig_1.isEdgeConfig; } });
+Object.defineProperty(exports, "isStallLocation", { enumerable: true, get: function () { return barnConfig_1.isStallLocation; } });
+Object.defineProperty(exports, "DEVICE_ENTITY_CLASSES", { enumerable: true, get: function () { return barnConfig_1.DEVICE_ENTITY_CLASSES; } });
 // Device Types
 var device_1 = require("./device");
 Object.defineProperty(exports, "EDGE_SENSOR_TO_DEVICE_TYPE", { enumerable: true, get: function () { return device_1.EDGE_SENSOR_TO_DEVICE_TYPE; } });

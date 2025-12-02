@@ -25,9 +25,6 @@ export interface Horse {
     farrierContact: string | null;
     feedingInstructions: string | null;
     assignedStallId: string | null;
-    stallAssignment: string | null;
-    cameraAssignments: string[];
-    sensorAssignments: string[];
     settings: Record<string, unknown>;
     createdAt: string;
     updatedAt: string;
@@ -82,9 +79,6 @@ export interface UpdateHorseRequest {
     farrierContact?: string | null;
     feedingInstructions?: string | null;
     assignedStallId?: string | null;
-    stallAssignment?: string | null;
-    cameraAssignments?: string[] | null;
-    sensorAssignments?: string[] | null;
     settings?: Record<string, unknown> | null;
 }
 /**
@@ -100,3 +94,36 @@ export interface HorsesSyncResponse {
     horses: Horse[];
     version: number;
 }
+/**
+ * Horse with stall devices - used by dashboard to display horse's stall
+ * Includes devices from the horse's assigned stall for camera/sensor display
+ */
+export interface HorseWithDevices extends Horse {
+    stallDevices?: StallDevice[];
+}
+/**
+ * Latest reading for a device sensor
+ */
+export interface DeviceLatestReading {
+    readingType: string;
+    valueNumeric?: number;
+    valueText?: string;
+    valueBoolean?: boolean;
+    timestamp: string;
+}
+/**
+ * Simplified device for horse stall display
+ * Only includes fields needed by the dashboard StallCard
+ */
+export interface StallDevice {
+    id: string;
+    stallId: string | null;
+    name: string;
+    deviceType: DeviceType;
+    status: DeviceStatus;
+    edgeDeviceId?: string;
+    metadata?: Record<string, unknown>;
+    /** Latest sensor reading for this device (if available) */
+    latestReading?: DeviceLatestReading;
+}
+import type { DeviceType, DeviceStatus } from './device';
