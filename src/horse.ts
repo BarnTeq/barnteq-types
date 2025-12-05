@@ -27,8 +27,10 @@ export interface Horse {
 
   // Profile and care information
   profileImageUrl: string | null;
-  vetContact: string | null;
-  farrierContact: string | null;
+  vetName: string | null;
+  vetPhone: string | null;
+  farrierName: string | null;
+  farrierPhone: string | null;
   feedingInstructions: string | null;
 
   // Stall assignment
@@ -74,8 +76,10 @@ export interface CreateHorseRequest {
   notes?: string;
 
   profileImageUrl?: string;
-  vetContact?: string;
-  farrierContact?: string;
+  vetName?: string;
+  vetPhone?: string;
+  farrierName?: string;
+  farrierPhone?: string;
   feedingInstructions?: string;
 
   barnId?: string;
@@ -99,8 +103,10 @@ export interface UpdateHorseRequest {
   notes?: string | null;
 
   profileImageUrl?: string | null;
-  vetContact?: string | null;
-  farrierContact?: string | null;
+  vetName?: string | null;
+  vetPhone?: string | null;
+  farrierName?: string | null;
+  farrierPhone?: string | null;
   feedingInstructions?: string | null;
 
   assignedStallId?: string | null;

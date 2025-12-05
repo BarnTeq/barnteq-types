@@ -21,8 +21,10 @@ export interface Horse {
     ownerContact: string | null;
     notes: string | null;
     profileImageUrl: string | null;
-    vetContact: string | null;
-    farrierContact: string | null;
+    vetName: string | null;
+    vetPhone: string | null;
+    farrierName: string | null;
+    farrierPhone: string | null;
     feedingInstructions: string | null;
     assignedStallId: string | null;
     settings: Record<string, unknown>;
@@ -55,8 +57,10 @@ export interface CreateHorseRequest {
     ownerContact?: string;
     notes?: string;
     profileImageUrl?: string;
-    vetContact?: string;
-    farrierContact?: string;
+    vetName?: string;
+    vetPhone?: string;
+    farrierName?: string;
+    farrierPhone?: string;
     feedingInstructions?: string;
     barnId?: string;
     assignedStallId?: string;
@@ -75,8 +79,10 @@ export interface UpdateHorseRequest {
     ownerContact?: string | null;
     notes?: string | null;
     profileImageUrl?: string | null;
-    vetContact?: string | null;
-    farrierContact?: string | null;
+    vetName?: string | null;
+    vetPhone?: string | null;
+    farrierName?: string | null;
+    farrierPhone?: string | null;
     feedingInstructions?: string | null;
     assignedStallId?: string | null;
     settings?: Record<string, unknown> | null;
