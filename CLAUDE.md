@@ -141,20 +141,31 @@ ageToBirthDate(5);             // "2020-01-01"
 
 ### Publishing Updates
 
-Since this is a git dependency, `dist/` must be committed:
+**⚠️ CRITICAL:** Consumer projects (barnteq-cloud, barnteq-edge) use symlinks locally but install from GitHub npm registry on Vercel/production. You MUST publish before deploying consumers.
 
+**Full publish workflow:**
 ```bash
+# 1. Build
 npm run build
-git add dist/
-git commit -m "Build: update types"
-git tag v1.x.x
-git push origin main --tags
+
+# 2. Commit all changes (including dist/)
+git add -A
+git commit -m "feat: add new field to Horse type"
+
+# 3. Bump version and publish
+npm version patch -m "v%s"    # Creates version commit and tag
+git push origin main --tags   # Push code and tag
+npm publish                   # Publish to GitHub npm registry
+
+# 4. Update consumers
+cd ../barnteq-cloud
+# Edit package.json to require new version (e.g., "^1.4.2")
+git add package.json
+git commit -m "chore: bump @barnteq/types to 1.4.2"
+git push
 ```
 
-Consumers update via:
-```bash
-npm update @barnteq/types
-```
+**Common issue:** barnteq-cloud builds locally but fails on Vercel with "Property does not exist on type". This means you modified types locally but didn't publish. The symlink uses your local changes, but Vercel installs the old published version.
 
 ### Type Guidelines
 
