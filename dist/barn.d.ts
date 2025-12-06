@@ -81,6 +81,7 @@ export interface Barn {
     bufferStatus: BufferStatus;
     horsesVersion: number;
     settings: Record<string, unknown>;
+    floorplanUrl: string | null;
     createdAt: string;
     updatedAt: string;
 }

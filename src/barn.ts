@@ -103,6 +103,9 @@ export interface Barn {
   // Settings
   settings: Record<string, unknown>;
 
+  // Floorplan URL (uploaded from edge config)
+  floorplanUrl: string | null;
+
   createdAt: string;
   updatedAt: string;
 }
