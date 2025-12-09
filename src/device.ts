@@ -35,7 +35,8 @@ export type ReadingType =
   | 'smoke'
   | 'co'
   | 'water_level'
-  | 'feed_level';
+  | 'feed_level'
+  | 'detection'; // Camera detection events from Frigate
 
 /**
  * Device record (cloud database schema)
