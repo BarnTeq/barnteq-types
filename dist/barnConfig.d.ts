@@ -21,6 +21,9 @@ export interface DeviceBindings {
     frigate_name?: string;
     /** Camera IP address (cameras only) */
     ip?: string;
+    /** Frigate zone coordinates for stall detection (cameras only).
+     *  Array of [x, y] normalized coordinates (0-1) defining the zone polygon. */
+    frigate_zone?: [number, number][];
     /** Home Assistant device registry ID */
     ha_device_id?: string;
     /** Z-Wave node ID (Z-Wave sensors) */

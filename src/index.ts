@@ -73,6 +73,7 @@ export {
   type DeviceStatus,
   type DeviceType,
   type ReadingType,
+  type VisionEvent,
 } from './device';
 
 // Horse Types

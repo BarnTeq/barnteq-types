@@ -12,7 +12,7 @@ export type DeviceStatus = 'online' | 'offline' | 'unknown';
 /**
  * Types of readings devices can report
  */
-export type ReadingType = 'state' | 'level' | 'temperature' | 'humidity' | 'battery' | 'location' | 'motion' | 'motion_detected' | 'online_status' | 'smoke' | 'co' | 'water_level' | 'feed_level' | 'detection';
+export type ReadingType = 'state' | 'level' | 'temperature' | 'humidity' | 'battery' | 'location' | 'motion' | 'motion_detected' | 'online_status' | 'smoke' | 'co' | 'water_level' | 'feed_level' | 'detection' | 'stall_occupancy' | 'feed_status';
 /**
  * Device record (cloud database schema)
  */
@@ -74,6 +74,28 @@ export interface CriticalEvent {
     readingType: string;
     value: string | number | boolean;
     timestamp: string;
+}
+/**
+ * Vision AI analysis event (published by barnteq-vision to MQTT)
+ */
+export interface VisionEvent {
+    /** Camera name (matches frigate_name in barn-config) */
+    camera: string;
+    /** Analysis timestamp (Unix seconds) */
+    timestamp: number;
+    /** Analysis results */
+    analysis: {
+        horse_present: boolean;
+        feed_bucket_visible: boolean;
+        feed_bucket_has_food: boolean | null;
+        confidence: {
+            horse_present: number;
+            feed_bucket_visible: number;
+            feed_bucket_has_food: number;
+        };
+    };
+    /** Source: 'llm' or 'edge_model' */
+    source: 'llm' | 'edge_model';
 }
 /**
  * Mapping from edge sensor type to cloud device type
