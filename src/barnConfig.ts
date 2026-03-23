@@ -94,6 +94,13 @@ export interface ConfigDevice {
   floorplan?: FloorplanPosition;
   /** Device-specific bindings */
   bindings: DeviceBindings;
+  /** Optional calibration for weight-based sensors (BTBucket) */
+  calibration?: {
+    /** Empty container weight in kg */
+    tare_kg: number;
+    /** Full container weight in kg */
+    full_kg: number;
+  };
 }
 
 // ============================================================================
