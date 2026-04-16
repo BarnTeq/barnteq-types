@@ -73,9 +73,28 @@ HeartbeatResponse
 ```typescript
 Device           // Device/sensor config
 DeviceReading    // Sensor reading
-ReadingType      // 'state', 'level', 'temperature', etc.
+ReadingType      // 'state', 'level', 'temperature', 'motion', 'water_level',
+                 // 'feed_level', 'stall_occupancy', 'feed_status',
+                 // 'waste_detected', 'horse_pose', 'bedding_condition',
+                 // 'stall_state_raw', etc. (full list in src/device.ts)
 EDGE_SENSOR_TO_DEVICE_TYPE  // Mapping constant
 ```
+
+**v1.6.0 (motion-only pivot):** Added four VLM-derived `ReadingType` members
+(`waste_detected`, `horse_pose`, `bedding_condition`, `stall_state_raw`)
+to support edge's `vision-client` fan-out from the cloud
+`/api/v1/barns/{id}/vision/analyze` response. `stall_occupancy` was already
+present but is now written by `vision-client.ts` instead of being derived
+from Frigate zone-gated YOLO events. See
+`barnbox/barnteq-installer/docs/OPERATIONAL-LESSONS.md` #9.
+
+**v1.7.0 (commands schema alignment):** Renamed
+`SyncResponse.pendingCommands[].payload` → `data` (and same for
+`SyncResponseLegacy`) to align with the `commands.data` DB column
+(renamed from `payload` in cloud migration 038) and the `Command.data`
+field already used everywhere else. The `payload` field was unused by
+edge consumers (which fetch commands via a separate `/commands` endpoint),
+so this rename is breaking in shape but a no-op in practice.
 
 ### Error Types
 ```typescript

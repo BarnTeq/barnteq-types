@@ -38,7 +38,11 @@ export type ReadingType =
   | 'feed_level'
   | 'detection' // Camera detection events from Frigate
   | 'stall_occupancy' // Vision AI: horse presence in stall
-  | 'feed_status'; // Vision AI: feed bucket status
+  | 'feed_status' // Vision AI: feed bucket status
+  | 'waste_detected' // Vision AI: waste / manure detected in stall (mucking indicator)
+  | 'horse_pose' // Vision AI: standing | lying | eating | moving | rearing
+  | 'bedding_condition' // Vision AI: clean | soiled | wet
+  | 'stall_state_raw'; // Vision AI: full parsed VLM response as JSON (audit + training reference)
 
 /**
  * Device record (cloud database schema)
