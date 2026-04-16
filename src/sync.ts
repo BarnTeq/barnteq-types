@@ -42,8 +42,12 @@ export interface SyncRequest {
 }
 
 /**
- * Sync response to edge device
- * Uses SyncResponseLegacy format for pendingCommands
+ * Sync response to edge device.
+ *
+ * pendingCommands[].data matches the `commands.data` column (renamed from
+ * `payload` in cloud migration 038) and the `Command.data` field used by
+ * edge's command pipeline. Field name was previously `payload` — renamed
+ * in v1.7.0 to align cloud + edge command-shape conventions.
  */
 export interface SyncResponse {
   success: boolean;
@@ -52,13 +56,14 @@ export interface SyncResponse {
   pendingCommands: Array<{
     id: string;
     action: string;
-    payload: Record<string, unknown>;
+    data: Record<string, unknown>;
     idempotency_key?: string;
   }>;
 }
 
 /**
- * Extended sync response with commands (legacy format)
+ * Extended sync response with commands (legacy format).
+ * Same shape as SyncResponse — kept as a separate alias for back-compat.
  */
 export interface SyncResponseLegacy {
   success: boolean;
@@ -67,7 +72,7 @@ export interface SyncResponseLegacy {
   pendingCommands: Array<{
     id: string;
     action: string;
-    payload: Record<string, unknown>;
+    data: Record<string, unknown>;
     idempotency_key?: string;
   }>;
 }

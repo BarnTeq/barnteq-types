@@ -88,6 +88,14 @@ present but is now written by `vision-client.ts` instead of being derived
 from Frigate zone-gated YOLO events. See
 `barnbox/barnteq-installer/docs/OPERATIONAL-LESSONS.md` #9.
 
+**v1.7.0 (commands schema alignment):** Renamed
+`SyncResponse.pendingCommands[].payload` → `data` (and same for
+`SyncResponseLegacy`) to align with the `commands.data` DB column
+(renamed from `payload` in cloud migration 038) and the `Command.data`
+field already used everywhere else. The `payload` field was unused by
+edge consumers (which fetch commands via a separate `/commands` endpoint),
+so this rename is breaking in shape but a no-op in practice.
+
 ### Error Types
 ```typescript
 ApiError         // Standard API error
