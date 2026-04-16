@@ -51,7 +51,7 @@ import {
 ### Device Types
 - `Device` - Device/sensor configuration
 - `DeviceReading` - Sensor reading data
-- `ReadingType` - Reading type enum ('state', 'level', 'temperature', etc.)
+- `ReadingType` - Reading type union. Core sensor types (`state`, `level`, `temperature`, `humidity`, `battery`, `water_level`, `feed_level`, `motion`, `smoke`, `co`, etc.) plus VLM-derived stall state (`stall_occupancy`, `feed_status`, `waste_detected`, `horse_pose`, `bedding_condition`, `stall_state_raw`). Full list in `src/device.ts`.
 - `EDGE_SENSOR_TO_DEVICE_TYPE` - Mapping from edge sensor types to cloud device types
 
 ### Event Types

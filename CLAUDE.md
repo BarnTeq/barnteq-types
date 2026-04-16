@@ -73,9 +73,20 @@ HeartbeatResponse
 ```typescript
 Device           // Device/sensor config
 DeviceReading    // Sensor reading
-ReadingType      // 'state', 'level', 'temperature', etc.
+ReadingType      // 'state', 'level', 'temperature', 'motion', 'water_level',
+                 // 'feed_level', 'stall_occupancy', 'feed_status',
+                 // 'waste_detected', 'horse_pose', 'bedding_condition',
+                 // 'stall_state_raw', etc. (full list in src/device.ts)
 EDGE_SENSOR_TO_DEVICE_TYPE  // Mapping constant
 ```
+
+**v1.6.0 (motion-only pivot):** Added four VLM-derived `ReadingType` members
+(`waste_detected`, `horse_pose`, `bedding_condition`, `stall_state_raw`)
+to support edge's `vision-client` fan-out from the cloud
+`/api/v1/barns/{id}/vision/analyze` response. `stall_occupancy` was already
+present but is now written by `vision-client.ts` instead of being derived
+from Frigate zone-gated YOLO events. See
+`barnbox/barnteq-installer/docs/OPERATIONAL-LESSONS.md` #9.
 
 ### Error Types
 ```typescript
