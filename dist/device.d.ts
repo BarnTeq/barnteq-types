@@ -12,7 +12,7 @@ export type DeviceStatus = 'online' | 'offline' | 'unknown';
 /**
  * Types of readings devices can report
  */
-export type ReadingType = 'state' | 'level' | 'temperature' | 'humidity' | 'battery' | 'location' | 'motion' | 'motion_detected' | 'online_status' | 'smoke' | 'co' | 'water_level' | 'feed_level' | 'detection' | 'stall_occupancy' | 'feed_status';
+export type ReadingType = 'state' | 'level' | 'temperature' | 'humidity' | 'battery' | 'location' | 'motion' | 'motion_detected' | 'online_status' | 'smoke' | 'co' | 'water_level' | 'feed_level' | 'detection' | 'stall_occupancy' | 'feed_status' | 'waste_detected' | 'horse_pose' | 'bedding_condition' | 'stall_state_raw';
 /**
  * Device record (cloud database schema)
  */
