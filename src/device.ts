@@ -42,7 +42,8 @@ export type ReadingType =
   | 'waste_detected' // Vision AI: waste / manure detected in stall (mucking indicator)
   | 'horse_pose' // Vision AI: standing | lying | eating | moving | rearing
   | 'bedding_condition' // Vision AI: clean | soiled | wet
-  | 'stall_state_raw'; // Vision AI: full parsed VLM response as JSON (audit + training reference)
+  | 'stall_state_raw' // Vision AI: full parsed VLM response as JSON (audit + training reference)
+  | 'stall_activity_score'; // Motion duty cycle (0.0–1.0) over rolling window — horse activity level
 
 /**
  * Device record (cloud database schema)
