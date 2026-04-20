@@ -91,6 +91,13 @@ export {
   type DeviceLatestReading,
 } from './horse';
 
+// Playback Types (historical video review)
+export {
+  type PlaybackSession,
+  type CreatePlaybackSessionRequest,
+  type CreatePlaybackSessionResponse,
+} from './playback';
+
 // Sync Types
 export {
   type EventLog,

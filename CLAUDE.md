@@ -76,7 +76,8 @@ DeviceReading    // Sensor reading
 ReadingType      // 'state', 'level', 'temperature', 'motion', 'water_level',
                  // 'feed_level', 'stall_occupancy', 'feed_status',
                  // 'waste_detected', 'horse_pose', 'bedding_condition',
-                 // 'stall_state_raw', etc. (full list in src/device.ts)
+                 // 'stall_state_raw', 'stall_activity_score', etc.
+                 // (full list in src/device.ts)
 EDGE_SENSOR_TO_DEVICE_TYPE  // Mapping constant
 ```
 
@@ -95,6 +96,25 @@ from Frigate zone-gated YOLO events. See
 field already used everywhere else. The `payload` field was unused by
 edge consumers (which fetch commands via a separate `/commands` endpoint),
 so this rename is breaking in shape but a no-op in practice.
+
+**v1.8.0 (spatial activity):** Added `stall_activity_score` to the
+`ReadingType` union. Emitted by edge `stall-monitor.service.ts` each
+VLM fire with `displacement_sum_15min` + `area_variance_15min` computed
+from the per-camera `spatialHistory` ring buffer (VLM-reported
+`horse_area_fraction` + `horse_center_x/y` over the last ~15 min).
+Replaces the v2.1.1 motion-duty-cycle activity metric, which was
+unreliable in sunlit barns where Frigate motion pins ON continuously.
+**Required cloud changes:** migration `043_add_stall_activity_score_reading_type.sql`
+applied to Supabase (new Postgres enum value) + cloud Zod enum + edge
+`DeviceReadingInput`/vision-client Zod schemas. See root `CLAUDE.md`
+Learnings "Adding a new `ReadingType` requires FIVE synchronized updates".
+
+**v1.9.0 (historical video playback):** Added `PlaybackSession`,
+`CreatePlaybackSessionRequest`, and `CreatePlaybackSessionResponse` to
+support the new historical-playback feature. Cloud issues short-lived
+random tokens via Pusher; edge proxies to Frigate's native `/vod` (HLS)
+and `/api` (clip.mp4) endpoints via Cloudflare Tunnel HTTP ingress.
+Additive — no changes to existing types.
 
 ### Error Types
 ```typescript
