@@ -43,7 +43,8 @@ export type ReadingType =
   | 'horse_pose' // Vision AI: standing | lying | eating | moving | rearing
   | 'bedding_condition' // Vision AI: clean | soiled | wet
   | 'stall_state_raw' // Vision AI: full parsed VLM response as JSON (audit + training reference)
-  | 'stall_activity_score'; // Motion duty cycle (0.0–1.0) over rolling window — horse activity level
+  | 'stall_activity_score' // Motion duty cycle (0.0–1.0) over rolling window — horse activity level
+  | 'barn_activity_score'; // Vision AI: barn-scope camera activity (0.0–1.0) — humans + horses + motion intensity
 
 /**
  * Device record (cloud database schema)
