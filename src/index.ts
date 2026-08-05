@@ -68,6 +68,8 @@ export {
   type SwitchCommandEvent,
   type SwitchFailureReason,
   type SwitchResultRequest,
+  type SwitchResultSuccess,
+  type SwitchResultFailure,
   type SwitchResultEvent,
   type SetSwitchRequest,
   type SetSwitchResponse,

@@ -50,23 +50,44 @@ export type SwitchFailureReason =
   /** a newer command for this device was processed first */
   | 'superseded';
 
+/** Fields common to either outcome. */
+interface SwitchResultBase {
+  requestId: string;
+  edgeDeviceId: string;
+}
+
+export interface SwitchResultSuccess extends SwitchResultBase {
+  success: true;
+  /**
+   * Relay position after the write. Required, and knowable: the write sets an
+   * absolute `targetValue`, so a successful write means the relay is in the
+   * commanded state. The device's own `switch_state` reading confirms it
+   * independently a moment later.
+   */
+  state: boolean;
+}
+
+export interface SwitchResultFailure extends SwitchResultBase {
+  success: false;
+  /** Required — a failure the UI can't categorise is a failure it can't explain. */
+  reason: SwitchFailureReason;
+  /** Human-readable detail for logs and UI. */
+  error?: string;
+}
+
 /**
  * Edge → cloud, reporting what actually happened.
  *
  * Sent for successes as well as failures. A success is independently confirmed
  * when the `switch_state` reading lands, but an explicit result is easier to
  * reason about than an inferred one — and a failure produces no reading at all.
+ *
+ * Discriminated on `success` so illegal states are unrepresentable: no success
+ * carrying a failure reason, no failure without one. Worth the extra shape here
+ * — this drives what the UI tells someone about a mains relay, and "it failed,
+ * reason undefined" is the least useful thing it could say.
  */
-export interface SwitchResultRequest {
-  requestId: string;
-  edgeDeviceId: string;
-  success: boolean;
-  /** Relay position the device reported after the write, when known. */
-  state?: boolean;
-  reason?: SwitchFailureReason;
-  /** Human-readable detail for logs and UI. */
-  error?: string;
-}
+export type SwitchResultRequest = SwitchResultSuccess | SwitchResultFailure;
 
 /** Pusher event: cloud → app. Same shape the edge reported. */
 export type SwitchResultEvent = SwitchResultRequest;

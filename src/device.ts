@@ -50,7 +50,11 @@ export type ReadingType =
   | 'horse_pose' // Vision AI: standing | lying | eating | moving | rearing
   | 'bedding_condition' // Vision AI: clean | soiled | wet
   | 'stall_state_raw' // Vision AI: full parsed VLM response as JSON (audit + training reference)
-  | 'stall_activity_score' // Motion duty cycle (0.0–1.0) over rolling window — horse activity level
+  // Vision AI: horse activity (0.0–1.0) from VLM spatial displacement + area
+  // variance over ~15 min. NOT a motion duty cycle — that was the v2.1.1
+  // implementation, removed in v2.2.0 because Frigate motion pins ON
+  // continuously in sunlit barns and never reflected real activity.
+  | 'stall_activity_score'
   | 'barn_activity_score' // Vision AI: barn-scope camera activity (0.0–1.0) — humans + horses + motion intensity
   | 'switch_state' // Relay position reported by the device (boolean) — commanded OR set by its physical button
   | 'power_watts'; // Live power draw (W). Distinguishes "commanded on" from "actually running"
