@@ -12,7 +12,14 @@ export type DeviceType =
   | 'feed_sensor'
   | 'gps_tracker'
   | 'climate_sensor'
-  | 'motion_sensor';
+  | 'motion_sensor'
+  /**
+   * Switched mains outlet driving a stall fan (Zooz ZEN15 800LR).
+   * The first controllable device in the system — everything above is read-only.
+   * Named by function, matching the convention (`water_sensor`, `gate_sensor`),
+   * not by hardware.
+   */
+  | 'fan_controller';
 
 /**
  * Device connection status
@@ -44,7 +51,9 @@ export type ReadingType =
   | 'bedding_condition' // Vision AI: clean | soiled | wet
   | 'stall_state_raw' // Vision AI: full parsed VLM response as JSON (audit + training reference)
   | 'stall_activity_score' // Motion duty cycle (0.0–1.0) over rolling window — horse activity level
-  | 'barn_activity_score'; // Vision AI: barn-scope camera activity (0.0–1.0) — humans + horses + motion intensity
+  | 'barn_activity_score' // Vision AI: barn-scope camera activity (0.0–1.0) — humans + horses + motion intensity
+  | 'switch_state' // Relay position reported by the device (boolean) — commanded OR set by its physical button
+  | 'power_watts'; // Live power draw (W). Distinguishes "commanded on" from "actually running"
 
 /**
  * Device record (cloud database schema)
