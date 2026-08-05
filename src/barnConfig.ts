@@ -227,4 +227,7 @@ export const DEVICE_ENTITY_CLASSES: Record<DeviceType, HAEntityClass[]> = {
   climate_sensor: ['temperature', 'humidity', 'battery'],
   motion_sensor: ['motion', 'battery'],
   gps_tracker: [],
+  // No HA entity class describes a switched outlet, and the Home Assistant
+  // layer was removed in v2.0 — this map is vestigial. Empty, like gps_tracker.
+  fan_controller: [],
 };

@@ -63,6 +63,18 @@ export {
   type SendCommandResponse,
 } from './command';
 
+// Control Types (cloud → edge actuation; Pusher-delivered, not queued)
+export {
+  type SwitchCommandEvent,
+  type SwitchFailureReason,
+  type SwitchResultRequest,
+  type SwitchResultSuccess,
+  type SwitchResultFailure,
+  type SwitchResultEvent,
+  type SetSwitchRequest,
+  type SetSwitchResponse,
+} from './control';
+
 // Device Types
 export {
   EDGE_SENSOR_TO_DEVICE_TYPE,

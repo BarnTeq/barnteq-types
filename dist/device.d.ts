@@ -4,7 +4,14 @@
 /**
  * Device types supported by the system
  */
-export type DeviceType = 'camera' | 'gate_sensor' | 'water_sensor' | 'feed_sensor' | 'gps_tracker' | 'climate_sensor' | 'motion_sensor';
+export type DeviceType = 'camera' | 'gate_sensor' | 'water_sensor' | 'feed_sensor' | 'gps_tracker' | 'climate_sensor' | 'motion_sensor'
+/**
+ * Switched mains outlet driving a stall fan (Zooz ZEN15 800LR).
+ * The first controllable device in the system — everything above is read-only.
+ * Named by function, matching the convention (`water_sensor`, `gate_sensor`),
+ * not by hardware.
+ */
+ | 'fan_controller';
 /**
  * Device connection status
  */
@@ -12,7 +19,7 @@ export type DeviceStatus = 'online' | 'offline' | 'unknown';
 /**
  * Types of readings devices can report
  */
-export type ReadingType = 'state' | 'level' | 'temperature' | 'humidity' | 'battery' | 'location' | 'motion' | 'motion_detected' | 'online_status' | 'smoke' | 'co' | 'water_level' | 'feed_level' | 'detection' | 'stall_occupancy' | 'feed_status' | 'waste_detected' | 'horse_pose' | 'bedding_condition' | 'stall_state_raw' | 'stall_activity_score' | 'barn_activity_score';
+export type ReadingType = 'state' | 'level' | 'temperature' | 'humidity' | 'battery' | 'location' | 'motion' | 'motion_detected' | 'online_status' | 'smoke' | 'co' | 'water_level' | 'feed_level' | 'detection' | 'stall_occupancy' | 'feed_status' | 'waste_detected' | 'horse_pose' | 'bedding_condition' | 'stall_state_raw' | 'stall_activity_score' | 'barn_activity_score' | 'switch_state' | 'power_watts';
 /**
  * Device record (cloud database schema)
  */
