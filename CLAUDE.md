@@ -34,7 +34,8 @@ src/
 ├── api.ts            # API error types and codes
 ├── barn.ts           # Barn entity types
 ├── barnConfig.ts     # Barn configuration types
-├── command.ts        # Command types and enums
+├── command.ts        # Command types and enums (housekeeping queue — NOT control)
+├── control.ts        # Cloud→edge device actuation contract (Pusher-delivered)
 ├── device.ts         # Device and reading types
 ├── horse.ts          # Horse profile types
 ├── sync.ts           # Edge-cloud sync types
@@ -46,11 +47,17 @@ src/
 ### Command Types
 ```typescript
 Command          // Base command structure
-CommandAction    // 'unlock_gate', 'lock_gate', 'toggle_light', etc.
-CommandStatus    // 'pending', 'acknowledged', 'completed', 'failed'
+CommandAction    // 'force_sync' | 'adjust_sync_interval'  — that is the whole union
+CommandStatus    // 'pending' | 'sent' | 'acknowledged' | 'failed'
 CloudCommand     // Extended with delivery method
 AcknowledgeCommandRequest
 ```
+
+⚠️ This previously documented `CommandAction` as `'unlock_gate', 'lock_gate',
+'toggle_light', etc.` — none of which ever existed. Actuator commands were
+imagined for this table and never built. **Do not add device control here:**
+`commands` is a durable store-and-forward queue, correct for housekeeping and
+wrong for interactive control. See `src/control.ts`.
 
 ### Barn Configuration
 ```typescript
@@ -115,6 +122,35 @@ support the new historical-playback feature. Cloud issues short-lived
 random tokens via Pusher; edge proxies to Frigate's native `/vod` (HLS)
 and `/api` (clip.mp4) endpoints via Cloudflare Tunnel HTTP ingress.
 Additive — no changes to existing types.
+
+**v1.11.0 (fan controller — first actuator):** Added `fan_controller` to
+`DeviceType` and `switch_state` / `power_watts` to `ReadingType`, for the Zooz
+ZEN15 800LR stall fan switch. `power_watts` is the interesting one: a relay only
+reports what it was *commanded*, while draw distinguishes that from what is
+*actually happening* — commanded ON at 0 W means unplugged, seized, or a tripped
+breaker.
+
+⚠️ `DEVICE_ENTITY_CLASSES` in `barnConfig.ts` is a `Record<DeviceType, …>`
+**inside this package**, so a new `DeviceType` fails *this* package's build until
+that map gains an entry. Not deferrable to a consumer repo.
+
+Added `src/control.ts` — the cloud→edge actuation contract. Control does **not**
+use the `commands` table: that is store-and-forward, right for housekeeping and
+wrong for an interactive signal that should work now or fail visibly. Delivery is
+Pusher, mirroring WebRTC signalling — cloud publishes, edge acts, edge reports
+back over its own authenticated channel, so no cloud→edge credential exists or is
+needed. `SwitchCommandEvent.createdAt` is load-bearing: Pusher ordering is not
+guaranteed across reconnects, and a replayed on/off pair on a relay is worse than
+a dropped one.
+
+**Required consumer changes:** Postgres enum migrations for the new
+`device_type` and two `reading_type` values, applied to Supabase **before** any
+edge deploy that emits them — `process_sensor_readings` is atomic, so one unknown
+enum value rolls back the entire batch, not just the new reading. Plus the cloud
+Zod tuple + exhaustiveness check, two hand-maintained `DeviceType` Zod enums in
+the cloud's `config` and `adopt` routes (which fail the *whole* device array on
+one bad element), and the app's `DeviceType` union plus three exhaustive
+`Record<DeviceType, …>` maps in `floorplanUtils.ts`.
 
 ### Error Types
 ```typescript
