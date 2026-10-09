@@ -64,6 +64,12 @@ export interface Barn {
   address: string | null;
   location: { lat: number; lng: number } | null;
   timezone: string;
+  /**
+   * Minutes after local midnight at which the barn's daily water-consumption
+   * cycle starts (0 = midnight, 960 = 4:00 PM). Optional for compatibility
+   * with rows/fixtures predating the column; consumers coalesce to 0.
+   */
+  waterDayStartMinutes?: number;
   ownerId: string;
   packageType: PackageType;
 
@@ -130,6 +136,8 @@ export interface UpdateBarnRequest {
   address?: string;
   location?: { lat: number; lng: number };
   timezone?: string;
+  /** 0–1439 minutes after local midnight; see Barn.waterDayStartMinutes. */
+  waterDayStartMinutes?: number;
   logoUrl?: string | null;
   settings?: Record<string, unknown>;
 }

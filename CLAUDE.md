@@ -158,6 +158,13 @@ ApiError         // Standard API error
 API_ERROR_CODES  // Error code constants
 ```
 
+**v1.12.0 (configurable water-cycle start):** Added optional
+`waterDayStartMinutes` to `Barn` and `UpdateBarnRequest` — minutes after local
+midnight (in `barns.timezone`) at which the barn's daily water-consumption
+cycle starts (0 = midnight, 960 = 4:00 PM). Optional so nothing that constructs
+a `Barn` breaks; consumers coalesce to 0. Backed by cloud migration 057
+(`barns.water_day_start_minutes`, default 0). Additive.
+
 ## Transform Utilities
 
 ### Timestamp Transforms
