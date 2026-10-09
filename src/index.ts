@@ -107,6 +107,7 @@ export {
 export {
   type PlaybackSession,
   type PlaybackSessionKind,
+  type RecordingSegment,
   type CreatePlaybackSessionRequest,
   type CreatePlaybackSessionResponse,
 } from './playback';

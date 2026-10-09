@@ -15,7 +15,7 @@
  *      offers a download via `downloadUrl`. URLs carry the token as
  *      `?t=<token>`; edge string-compares it against its local session row.
  *
- * Session kinds (v1.12.0):
+ * Session kinds (v1.13.0):
  *   - absent (legacy): both URLs, window ≤ 15 min, short TTL.
  *   - 'hls': scrubbing session, window up to 2 h, `playbackUrl` + `segmentsUrl`,
  *     long TTL. The edge refuses `clip.mp4` for this kind.

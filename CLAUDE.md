@@ -175,6 +175,9 @@ on `CreatePlaybackSessionRequest`; `playbackUrl` / `downloadUrl` are now
 optional (present per kind), plus `segmentsUrl` and `capabilityLimited`.
 Additive for existing callers (absent `kind` = legacy behaviour). Backed by a
 cloud migration adding `barns.recording_coverage` + `recording_coverage_at`.
+v1.13.1: the session response echoes `kind` and the effective `startTs`/`endTs`
+(the cloud may shrink an `hls` window; clients must use the echoed window), and
+`RecordingSegment` is exported for the `segmentsUrl` payload.
 
 ## Transform Utilities
 

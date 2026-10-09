@@ -14,7 +14,7 @@
  *      offers a download via `downloadUrl`. URLs carry the token as
  *      `?t=<token>`; edge string-compares it against its local session row.
  *
- * Session kinds (v1.12.0):
+ * Session kinds (v1.13.0):
  *   - absent (legacy): both URLs, window ≤ 15 min, short TTL.
  *   - 'hls': scrubbing session, window up to 2 h, `playbackUrl` + `segmentsUrl`,
  *     long TTL. The edge refuses `clip.mp4` for this kind.
@@ -37,6 +37,11 @@ export interface PlaybackSession {
     segmentsUrl?: string;
     /** Epoch ms at which the session (and its token) stops being valid. */
     expiresAt: number;
+    /** Kind the cloud granted (absent for legacy sessions). Lets clients narrow which URLs exist. */
+    kind?: PlaybackSessionKind;
+    /** ISO8601 window the edge was actually told about. Can be shorter than the request (see `capabilityLimited`). */
+    startTs?: string;
+    endTs?: string;
     /**
      * True when the cloud capped an 'hls' request at the legacy 15-min window
      * because the barn's edge has not reported recording coverage yet (and so
@@ -57,4 +62,11 @@ export interface CreatePlaybackSessionRequest {
 export interface CreatePlaybackSessionResponse extends PlaybackSession {
     /** Raw token echoed back so callers can embed it in additional requests if needed. */
     token: string;
+}
+/** One recorded segment inside a session window, as served by the edge's `segmentsUrl`. */
+export interface RecordingSegment {
+    /** ISO8601 start of the segment. */
+    startTs: string;
+    /** Segment length in seconds; media time in the HLS playlist is the concatenation of these. */
+    durationSec: number;
 }
