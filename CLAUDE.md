@@ -178,6 +178,8 @@ cloud migration adding `barns.recording_coverage` + `recording_coverage_at`.
 v1.13.1: the session response echoes `kind` and the effective `startTs`/`endTs`
 (the cloud may shrink an `hls` window; clients must use the echoed window), and
 `RecordingSegment` is exported for the `segmentsUrl` payload.
+**v1.14.0 (water markers):** `CameraEventKind` gains `'drink'` and `'water_filled'`.
+Additive; consumed by the cloud camera events route and the app History page.
 
 ## Transform Utilities
 

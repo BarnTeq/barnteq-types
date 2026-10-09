@@ -56,7 +56,11 @@ export type CameraEventKind =
   | 'left_stall'
   | 'back_in_stall'
   | 'door_open'
-  | 'door_closed';
+  | 'door_closed'
+  /** A drop of at least 1 kg between two consecutive bucket-present BTBucket readings. */
+  | 'drink'
+  /** A rise of at least 3 kg while present, or the bucket re-hung at or above half full. */
+  | 'water_filled';
 
 export interface CameraEvent {
   /** ISO8601 time of the transition. */
