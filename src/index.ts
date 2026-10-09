@@ -106,9 +106,20 @@ export {
 // Playback Types (historical video review)
 export {
   type PlaybackSession,
+  type PlaybackSessionKind,
+  type RecordingSegment,
   type CreatePlaybackSessionRequest,
   type CreatePlaybackSessionResponse,
 } from './playback';
+
+// Recording coverage + timeline events (History page)
+export {
+  type RecordingGap,
+  type CameraRecordingCoverage,
+  type RecordingCoverageReport,
+  type CameraEventKind,
+  type CameraEvent,
+} from './coverage';
 
 // Sync Types
 export {
