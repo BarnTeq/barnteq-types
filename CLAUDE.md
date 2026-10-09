@@ -165,6 +165,17 @@ cycle starts (0 = midnight, 960 = 4:00 PM). Optional so nothing that constructs
 a `Barn` breaks; consumers coalesce to 0. Backed by cloud migration 057
 (`barns.water_day_start_minutes`, default 0). Additive.
 
+**v1.13.0 (camera History page):** Added `src/coverage.ts` —
+`CameraRecordingCoverage` / `RecordingCoverageReport` (what continuous video
+the BarnBox still holds per camera, hour granularity, sent on the heartbeat
+as the new optional `HeartbeatRequest.recordingCoverage`) and
+`CameraEvent` / `CameraEventKind` (timeline markers derived from readings).
+`PlaybackSession` gained `kind` semantics: `PlaybackSessionKind = 'hls' | 'clip'`
+on `CreatePlaybackSessionRequest`; `playbackUrl` / `downloadUrl` are now
+optional (present per kind), plus `segmentsUrl` and `capabilityLimited`.
+Additive for existing callers (absent `kind` = legacy behaviour). Backed by a
+cloud migration adding `barns.recording_coverage` + `recording_coverage_at`.
+
 ## Transform Utilities
 
 ### Timestamp Transforms

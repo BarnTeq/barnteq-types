@@ -2,9 +2,9 @@
 /**
  * Historical video playback types.
  *
- * A playback session is a short-lived (~15 min) authorization bundle that
- * lets the frontend fetch HLS / MP4 for a specific camera + time range
- * directly from the edge BarnBox via its Cloudflare Tunnel HTTP ingress.
+ * A playback session is a short-lived authorization bundle that lets the
+ * frontend fetch HLS / MP4 for a specific camera + time range directly from
+ * the edge BarnBox via its Cloudflare Tunnel HTTP ingress.
  *
  * Flow:
  *   1. Frontend POSTs CreatePlaybackSessionRequest to cloud.
@@ -12,7 +12,13 @@
  *      generates an opaque random token, pushes it to edge via Pusher,
  *      and returns CreatePlaybackSessionResponse.
  *   3. Frontend attaches HLS.js (or native Safari HLS) to `playbackUrl` and
- *      offers a download via `downloadUrl`. Both URLs carry the token as
+ *      offers a download via `downloadUrl`. URLs carry the token as
  *      `?t=<token>`; edge string-compares it against its local session row.
+ *
+ * Session kinds (v1.12.0):
+ *   - absent (legacy): both URLs, window ≤ 15 min, short TTL.
+ *   - 'hls': scrubbing session, window up to 2 h, `playbackUrl` + `segmentsUrl`,
+ *     long TTL. The edge refuses `clip.mp4` for this kind.
+ *   - 'clip': download session, window ≤ 15 min, `downloadUrl` only.
  */
 Object.defineProperty(exports, "__esModule", { value: true });

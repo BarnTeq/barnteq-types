@@ -3,6 +3,7 @@
  */
 
 import type { SyncHealthMetrics, SyncBufferStatus } from './barn';
+import type { RecordingCoverageReport } from './coverage';
 
 /**
  * Event types from edge device
@@ -182,6 +183,11 @@ export interface HeartbeatRequest {
   diskUsage?: number;
   haConnected?: boolean;
   frigateConnected?: boolean;
+  /**
+   * Per-camera recording coverage (v1.13.0). Attached at most every ~5 min;
+   * absent on the other ticks. The cloud keeps the last report it accepted.
+   */
+  recordingCoverage?: RecordingCoverageReport;
 }
 
 /**

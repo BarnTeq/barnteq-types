@@ -1,9 +1,9 @@
 /**
  * Historical video playback types.
  *
- * A playback session is a short-lived (~15 min) authorization bundle that
- * lets the frontend fetch HLS / MP4 for a specific camera + time range
- * directly from the edge BarnBox via its Cloudflare Tunnel HTTP ingress.
+ * A playback session is a short-lived authorization bundle that lets the
+ * frontend fetch HLS / MP4 for a specific camera + time range directly from
+ * the edge BarnBox via its Cloudflare Tunnel HTTP ingress.
  *
  * Flow:
  *   1. Frontend POSTs CreatePlaybackSessionRequest to cloud.
@@ -11,19 +11,40 @@
  *      generates an opaque random token, pushes it to edge via Pusher,
  *      and returns CreatePlaybackSessionResponse.
  *   3. Frontend attaches HLS.js (or native Safari HLS) to `playbackUrl` and
- *      offers a download via `downloadUrl`. Both URLs carry the token as
+ *      offers a download via `downloadUrl`. URLs carry the token as
  *      `?t=<token>`; edge string-compares it against its local session row.
+ *
+ * Session kinds (v1.12.0):
+ *   - absent (legacy): both URLs, window ≤ 15 min, short TTL.
+ *   - 'hls': scrubbing session, window up to 2 h, `playbackUrl` + `segmentsUrl`,
+ *     long TTL. The edge refuses `clip.mp4` for this kind.
+ *   - 'clip': download session, window ≤ 15 min, `downloadUrl` only.
  */
+
+export type PlaybackSessionKind = 'hls' | 'clip';
 
 export interface PlaybackSession {
   /** Opaque session id (UUID). */
   sid: string;
-  /** HLS master playlist URL, token included as `?t=`. */
-  playbackUrl: string;
-  /** Muxed MP4 download URL for the same window, token included. */
-  downloadUrl: string;
+  /** HLS master playlist URL, token included as `?t=`. Present for 'hls' and legacy. */
+  playbackUrl?: string;
+  /** Muxed MP4 download URL for the window, token included. Present for 'clip' and legacy. */
+  downloadUrl?: string;
+  /**
+   * JSON list of the recorded segments inside the window
+   * (`[{ startTs, durationSec }]`), token included. Present for 'hls'.
+   * Media time in the HLS playlist is the concatenation of these segments,
+   * so wall-clock ↔ media offset mapping must go through this list.
+   */
+  segmentsUrl?: string;
   /** Epoch ms at which the session (and its token) stops being valid. */
   expiresAt: number;
+  /**
+   * True when the cloud capped an 'hls' request at the legacy 15-min window
+   * because the barn's edge has not reported recording coverage yet (and so
+   * cannot be assumed to enforce session kinds).
+   */
+  capabilityLimited?: boolean;
 }
 
 export interface CreatePlaybackSessionRequest {
@@ -33,6 +54,8 @@ export interface CreatePlaybackSessionRequest {
   startTs: string;
   /** ISO8601 end of the playback window. Must be ≥ startTs and within retention. */
   endTs: string;
+  /** Session kind; absent means legacy behaviour (both URLs, 15-min cap). */
+  kind?: PlaybackSessionKind;
 }
 
 export interface CreatePlaybackSessionResponse extends PlaybackSession {
